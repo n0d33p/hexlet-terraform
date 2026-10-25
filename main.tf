@@ -11,18 +11,18 @@ provider "yandex" {
   service_account_key_file = var.yc_token_file
   cloud_id                 = var.yc_cloud_id
   folder_id                = var.yc_folder_id
-  zone                     = "ru-central1-d"
+  zone                     = var.yc_zone
 }
 
 resource "yandex_compute_instance" "default" {
-  name        = "test"
-  platform_id = "standard-v1"
-  zone        = "ru-central1-d"
+  name        = var.server_name
+  platform_id = "standard-v3"
+  zone        = var.yc_zone
 
   resources {
-    cores  = 2
-    memory = 4
-    core_fraction = 20
+    cores = var.vm_resources.cores
+    memory = var.vm_resources.memory
+    core_fraction = var.vm_resources.core_fraction
   }
 
   boot_disk {
@@ -42,19 +42,17 @@ resource "yandex_vpc_network" "default" {
 }
 
 resource "yandex_vpc_subnet" "default" {
-  zone           = "ru-central1-d"
+  zone           = var.yc_zone
   network_id     = yandex_vpc_network.default.id
   v4_cidr_blocks = ["10.5.0.0/24"]
 }
 
 resource "yandex_compute_disk" "default" {
   name      = "disk-name"
-  type      = "network-hdd"
-  size      = 20
-  zone      = "ru-central1-e"
+  type      = "network-ssd"
+  size      = 10
+  zone      = var.yc_zone
   image_id  = "fd83s8u085j3mq231ago" // идентификатор образа Ubuntu
 
-  labels = {
-    environment = "test"
-  }
+  labels = var.resource_labels
 }
