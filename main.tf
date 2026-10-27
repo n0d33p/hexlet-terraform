@@ -52,7 +52,15 @@ resource "yandex_compute_disk" "default" {
   type      = "network-ssd"
   size      = 10
   zone      = var.yc_zone
-  image_id  = "fd83s8u085j3mq231ago" // идентификатор образа Ubuntu
+  image_id  = data.yandex_compute_image.img.id // идентификатор образа Ubuntu
 
   labels = var.resource_labels
+}
+
+data "yandex_compute_image" "img" {
+  family = "ubuntu-2204-lts"
+}
+
+output "show_img" {
+  value = data.yandex_compute_image.img
 }
