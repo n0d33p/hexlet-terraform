@@ -9,31 +9,31 @@ variable "yc_folder_id" {
   type = string
 }
 variable "yc_zone" {
-    description = "Зона доступности Yandex Cloud"
-    type = string
-    default = "ru-central1-e"
+  description = "Зона доступности Yandex Cloud"
+  type        = string
+  default     = "ru-central1-a"
 }
 variable "resource_labels" {
-    type = map(string)
-    default = {
-        environment = "dev" 
-    }
+  type = map(string)
+  default = {
+    environment = "dev"
+  }
 }
 variable "server_name" {
-    description = "Имя сервера"
-    type = string
-    default = "test"
+  description = "Имя сервера"
+  type        = string
+  default     = "test"
 }
 variable "vm_resources" {
-    description = "Ресурсы сервера"
-    type = object({
-        cores = number
-        memory = number
-        core_fraction = number
-    })
-    default = {
-        cores = 2
-        memory = 4
-        core_fraction = 20
-    }
+  description = "Ресурсы сервера"
+  type = object({
+    cores         = number
+    memory        = number
+    core_fraction = number
+  })
+  default = {
+    cores         = 2
+    memory        = 4
+    core_fraction = 20
+  }
 }
